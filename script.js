@@ -18,6 +18,12 @@ function hozzaad(event){
     listazas();
 }
 
+function torles(event){
+    // console.log('OK',event.target.dataset.id);
+    dolgozok.splice(event.target.dataset.id,1); // kitörli az adot sorszámú elemet
+    listazas();
+}
+
 function listazas(){
     let i = 1;
     tablazat.innerHTML=''; // törli a tbody tartalmát
@@ -44,9 +50,41 @@ function listazas(){
         td.textContent = egyDolgozo.neme;       
         tr.append(td); 
 
+        let button =  document.createElement('button'); // <button></button>
+        button.textContent = 'Törlés';                  // <button>Törlés</button>
+        button.className = 'btn btn-danger';
+        button.dataset.id = i-1;
+        button.addEventListener('click',torles);
+        td = document.createElement('td'); 
+        td.append(button);                              // <td><button>Törlés</button></td>
+        tr.append(td);
+
         tablazat.append(tr);
         i++;
     });
 }
 
+// eseménykezelés
 urlap.addEventListener('submit',hozzaad);
+
+
+// teszt adatok
+dolgozok.push({
+    nev : 'Józsi',
+    email: 'jozsi@cegem.hu',
+    szuletesiDatum: '1980.01.01',
+    neme: 'fiú'
+});
+dolgozok.push({
+    nev : 'Béla',
+    email: 'bela@cegem.hu',
+    szuletesiDatum: '1984.11.01',
+    neme: 'fiú'
+});
+dolgozok.push({
+    nev : 'Kata',
+    email: 'kata@cegem.hu',
+    szuletesiDatum: '1985.10.02',
+    neme: 'lány'
+});
+listazas();
